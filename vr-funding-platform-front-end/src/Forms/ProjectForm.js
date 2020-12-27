@@ -6,19 +6,20 @@ import axios from "axios";
 
 const initialFormValues = {
   title: "",
-  imageUrl: "",
-  location: "",
+  image: "",
+  city: "",
+  state: "",
   description: "",
-  detailedInfo: "",
-  askingAmount: "",
+  goal: "",
+  date_created: "",
 };
 
 const initialFormErrors = {
   title: "",
-  imageUrl: "",
+  image: "",
   location: "",
   description: "",
-  askingAmount: "",
+  goal: "",
 };
 
 const initialDisabled = true;
@@ -32,10 +33,11 @@ export default function ProjectForm() {
 
   const formSchema = yup.object().shape({
     title: yup.string().required("Project reqiures a title"),
-    imageUrl: yup.string().required("Project must have a cover image"),
-    location: yup.string().required("Location of project is required"),
+    image: yup.string().required("Project must have a cover image"),
+    city: yup.string().required("City of project is required"),
+    state: yup.string().required("State of project is required"),
     description: yup.string().required("Project must have a brief description"),
-    askingAmount: yup.string().required("An asking amount is required"),
+    goal: yup.string().required("An asking amount is required"),
   });
 
   const formErrors = (name, value) => {
@@ -66,11 +68,12 @@ export default function ProjectForm() {
     evt.pereventDefault();
     const newProject = {
       title: formValues.title.trim(),
-      imageUrl: formValues.imageUrl.trim(),
-      location: formValues.location.trim(),
+      image: formValues.image.trim(),
+      city: formValues.city.trim(),
+      state: formValues.state.trim(),
       description: formValues.description.trim(),
-      detailedInfo: formValues.detailedInfo.trim(),
-      askingAmount: formValues.askingAmount.trim(),
+      goal: formValues.goal.trim(),
+      date_created: Date.now(),
     };
     axios
       .post("api/project", newProject)
@@ -106,15 +109,29 @@ export default function ProjectForm() {
             </Col>
           </FormGroup>
           <FormGroup as={Row} controlId="formHorizontalLocation">
-            <Label for="location" column sm={2}>
-              Location
+            <Label for="city" column sm={2}>
+              City
             </Label>
             <Col sm={10}>
               <Input
                 type="text"
-                placeholder="Locaation"
-                name="location"
-                value={formValues.location}
+                placeholder="City"
+                name="city"
+                value={formValues.city}
+                onChange={onChange}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row} controlId="formHorizontalLocation">
+            <Label for="state" column sm={2}>
+              State
+            </Label>
+            <Col sm={10}>
+              <Input
+                type="text"
+                placeholder="State"
+                name="state"
+                value={formValues.state}
                 onChange={onChange}
               />
             </Col>
@@ -148,29 +165,29 @@ export default function ProjectForm() {
             </Col>
           </FormGroup>
           <FormGroup as={Row} controlId="formHorizontalImageUrl">
-            <Label for="imageUrl" column sm={2}>
+            <Label for="image" column sm={2}>
               ImageUrl
             </Label>
             <Col sm={10}>
               <Input
                 type="text"
-                placeholder="imageUrl"
-                name="imageUrl"
-                value={formValues.imageUrl}
+                placeholder="image"
+                name="image"
+                value={formValues.image}
                 onChange={onChange}
               />
             </Col>
           </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalAskingAmount">
-            <Label for="askingAmount" column sm={2}>
+          <FormGroup as={Row} controlId="formHorizontalgoal">
+            <Label for="goal" column sm={2}>
               Askin Amount
             </Label>
             <Col sm={10}>
               <Input
                 type="text"
                 placeholder="Asking Amount"
-                name="askingAmount"
-                value={formValues.askingAmount}
+                name="goal"
+                value={formValues.goal}
                 onChange={onChange}
               />
             </Col>
