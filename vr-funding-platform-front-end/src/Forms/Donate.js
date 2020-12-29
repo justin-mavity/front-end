@@ -10,20 +10,23 @@ import {
 } from "reactstrap";
 
 export default function Donate(props) {
-  const { projectId, total } = props;
+  const { projectId } = props;
   const [donor, setDonor] = useState({ first: "", last: "" });
-  const [donate, setDonate] = useState(0);
+  const [amount, setAmount] = useState(0);
 
   const change = (evt) => {
     const { name, value } = evt.target;
     setDonor({ ...donor, [name]: value });
-    setDonate({ ...donate, [name]: value });
+    setAmount({ ...amount, [name]: value });
   };
 
-  const donation = (evt) => {
+  const donate = (evt) => {
     evt.preventDefault();
     projectId.map((project) => {
-      return { ...project, [total]: project.total + donate.amount };
+      return {
+        ...project,
+        [project.amount_raised]: project.amount_raised + amount,
+      };
     });
   };
   return (
@@ -63,7 +66,7 @@ export default function Donate(props) {
           <InputGroupAddon addonType="append">.00</InputGroupAddon>
         </InputGroup>
       </FormGroup>
-      <Button onClick={donation}>Donate</Button>
+      <Button onClick={donate}>Donate</Button>
     </Form>
   );
 }
