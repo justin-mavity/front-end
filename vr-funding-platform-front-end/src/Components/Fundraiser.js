@@ -28,7 +28,7 @@ export default function Fundraiser(props) {
     axios.get(
       `https://tt-46-vr-funding.herokuapp.com/api/fundraisers/${fundraiser.id}`
     );
-  }, [fundraiser.amount_raised]);
+  }, [fundraiser.id]);
 
   const close = () => {
     history.push("/fundraisers");

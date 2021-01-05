@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import FundraiserList from "./FundraiserList";
 
 import "./Home.css";
 
@@ -10,7 +11,7 @@ export default function Home() {
   };
   return (
     <div className="home-wrapper">
-      <section id="sidebar">
+      <div id="sidebar">
         <div className="inner">
           <nav>
             <ul>
@@ -32,9 +33,9 @@ export default function Home() {
             </ul>
           </nav>
         </div>
-      </section>
+      </div>
       <div id="wrapper">
-        <section id="intro" className="wrapper style1 fullscreen fade-up">
+        <div id="intro" className="wrapper style1 fullscreen fade-up">
           <div className="inner">
             <h1>SIXR VR Funding</h1>
             <p>
@@ -54,8 +55,8 @@ export default function Home() {
               </li>
             </ul>
           </div>
-        </section>
-        <section id="about" className="wrapper style2">
+        </div>
+        <div id="about" className="wrapper style2">
           <div className="inner">
             <h3>About Us</h3>
             <p>
@@ -76,7 +77,12 @@ export default function Home() {
               landscape!
             </p>
           </div>
-        </section>
+        </div>
+        <div className="fundraiser-list">
+          <div className="inner">
+            <h3>Broswe Available Fundraisers</h3>
+          </div>
+        </div>
       </div>
     </div>
   );
