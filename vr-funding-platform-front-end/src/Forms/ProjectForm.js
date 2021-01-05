@@ -142,8 +142,8 @@ export default function ProjectForm() {
             </Label>
             <Col sm={10}>
               <Input
-                type="text"
-                placeholder="Breif Description"
+                type="textarea"
+                placeholder="Description"
                 name="description"
                 value={formValues.description}
                 onChange={onChange}
