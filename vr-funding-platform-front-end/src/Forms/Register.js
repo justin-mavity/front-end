@@ -78,7 +78,7 @@ function Register() {
       terms: form.terms,
     };
     axios
-      .post("https://localhost:3000/register", newUser)
+      .post("https://tt-46-vr-funding/register", newUser)
       .then((res) => {
         console.log("Login res: ", res);
         history.push("/dashboard");

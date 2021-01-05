@@ -54,7 +54,7 @@ function Login() {
       password: form.password.trim(),
     };
     axios
-      .post("https://skrat-expat.herokuapp.com/api/auth/login", newUser)
+      .post("https://tt-46-vr-funding.herokuapp.com/api/auth/login", newUser)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         history.push("/dashboard");
