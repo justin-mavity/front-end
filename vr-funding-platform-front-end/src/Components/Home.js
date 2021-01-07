@@ -1,16 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import FundraiserList from "./FundraiserCard";
 
 import "./Home.css";
 
-export default function Home() {
+export default function Home(props) {
+  const { fundraisers } = props;
   const history = useHistory();
   const routeToLogin = () => {
     history.push("/login");
   };
   return (
     <div className="home-wrapper">
-      <section id="sidebar">
+      <div id="sidebar">
         <div className="inner">
           <nav>
             <ul>
@@ -25,16 +27,20 @@ export default function Home() {
                 </a>
               </li>
               <li>
-                <a href="#login" className="scrolly active-locked">
+                <a
+                  href="login"
+                  className="scrolly active-locked"
+                  onClick={routeToLogin}
+                >
                   Sign In
                 </a>
               </li>
             </ul>
           </nav>
         </div>
-      </section>
+      </div>
       <div id="wrapper">
-        <section id="intro" className="wrapper style1 fullscreen fade-up">
+        <div id="intro" className="wrapper style1 fullscreen fade-up">
           <div className="inner">
             <h1>SIXR VR Funding</h1>
             <p>
@@ -46,7 +52,7 @@ export default function Home() {
               <li>
                 <button
                   type="button"
-                  clasName="button scrolly"
+                  className="button scrolly"
                   onClick={routeToLogin}
                 >
                   Log In
@@ -54,8 +60,8 @@ export default function Home() {
               </li>
             </ul>
           </div>
-        </section>
-        <section id="about" className="wrapper style2">
+        </div>
+        <div id="about" className="wrapper style2">
           <div className="inner">
             <h3>About Us</h3>
             <p>
@@ -76,7 +82,13 @@ export default function Home() {
               landscape!
             </p>
           </div>
-        </section>
+        </div>
+        <div className="fundraiser-list">
+          <div className="inner">
+            <h3>Browse Available Fundraisers</h3>
+            {<FundraiserList fundraisers={fundraisers} />}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -13,7 +13,6 @@ import axios from "axios";
 export default function Fundraiser(props) {
   const { fundraisers } = props;
   const history = useHistory();
-
   const { url, path } = useRouteMatch();
   console.log(url, "URL");
   console.log(path, "PATH");
@@ -21,14 +20,8 @@ export default function Fundraiser(props) {
   const { fundraiserID } = useParams();
   const fundraiser =
     fundraisers.find((fundraiser) => {
-      return fundraiser.id === fundraiserID;
+      return fundraiser.id == fundraiserID;
     }) || {};
-
-  useEffect(() => {
-    axios.get(
-      `https://tt-46-vr-funding.herokuapp.com/api/fundraisers/${fundraiser.id}`
-    );
-  }, [fundraiser.amount_raised]);
 
   const close = () => {
     history.push("/fundraisers");
@@ -64,7 +57,7 @@ export default function Fundraiser(props) {
       </Button>
 
       <Route path={`${path}/donate`}>
-        <Donate projectI={fundraiser.id} />
+        <Donate key={fundraiser.id} />
       </Route>
     </div>
   );

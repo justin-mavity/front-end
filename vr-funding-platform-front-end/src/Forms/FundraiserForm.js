@@ -5,6 +5,7 @@ import * as yup from "yup";
 import axios from "axios";
 
 const initialFormValues = {
+  user_id: "",
   title: "",
   image: "",
   city: "",
@@ -24,7 +25,7 @@ const initialFormErrors = {
 
 const initialDisabled = true;
 
-export default function ProjectForm() {
+export default function FundraiserForm(props) {
   const [errors, setErrors] = useState(initialFormErrors);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(initialDisabled);
@@ -66,7 +67,7 @@ export default function ProjectForm() {
 
   const onSubmit = (evt) => {
     evt.pereventDefault();
-    const newProject = {
+    const newFundraiser = {
       title: formValues.title.trim(),
       image: formValues.image.trim(),
       city: formValues.city.trim(),
@@ -74,15 +75,14 @@ export default function ProjectForm() {
       description: formValues.description.trim(),
       goal: formValues.goal.trim(),
       date_created: Date.now(),
+      user_id: localStorage.getItem("user_id"),
     };
-    axios
-      .post("api/project", newProject)
-      .then((res) => {
-        history.push("/dashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    props.addFundraiser(
+      newFundraiser,
+      history,
+      setFormValues,
+      initialFormValues
+    );
   };
 
   useEffect(() => {
