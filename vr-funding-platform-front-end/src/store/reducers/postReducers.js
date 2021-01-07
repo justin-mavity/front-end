@@ -27,7 +27,7 @@ export const PostReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: action.payload,
+        fundraisers: action.payload,
       };
     case FETCH_FUNDRAISERS_ERROR:
       return {
@@ -40,7 +40,7 @@ export const PostReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: action.payload,
+        fundraisers: action.payload,
       };
     case FUNDRAISER_ADD_ERROR:
       return {
@@ -52,7 +52,7 @@ export const PostReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: action.payload,
+        fundraisers: action.payload,
       };
     case FUNDRAISER_DELETE_ERROR:
       return {
@@ -64,7 +64,7 @@ export const PostReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: action.payload,
+        fundraisers: action.payload,
       };
     case FUNDRAISER_EDIT_ERROR:
       return {
