@@ -1,10 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import FundraiserList from "./FundraiserList";
+import FundraiserList from "./FundraiserCard";
 
 import "./Home.css";
 
-export default function Home() {
+export default function Home(props) {
+  const { fundraisers } = props;
   const history = useHistory();
   const routeToLogin = () => {
     history.push("/login");
@@ -26,7 +27,11 @@ export default function Home() {
                 </a>
               </li>
               <li>
-                <a href="#login" className="scrolly active-locked">
+                <a
+                  href="login"
+                  className="scrolly active-locked"
+                  onClick={routeToLogin}
+                >
                   Sign In
                 </a>
               </li>
@@ -47,7 +52,7 @@ export default function Home() {
               <li>
                 <button
                   type="button"
-                  clasName="button scrolly"
+                  className="button scrolly"
                   onClick={routeToLogin}
                 >
                   Log In
@@ -80,7 +85,8 @@ export default function Home() {
         </div>
         <div className="fundraiser-list">
           <div className="inner">
-            <h3>Broswe Available Fundraisers</h3>
+            <h3>Browse Available Fundraisers</h3>
+            {<FundraiserList fundraisers={fundraisers} />}
           </div>
         </div>
       </div>

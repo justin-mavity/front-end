@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 import { Route, Link, useParams, useHistory } from "react-router-dom";
-import ProjectForm from "../Forms/ProjectForm";
+import ProjectForm from "../Forms/FundraiserForm";
 import { Button } from "reactstrap";
 import Fundraiser from "./Fundraiser";
 
-import axios from "axios";
-
 export default function Dashboard(props) {
-  const { userFundraisers } = props;
+  const { fundraisers, update } = props;
 
   const { userID } = useParams();
-  const fundraiser =
-    userFundraisers.find((fundraiser) => {
+  const userFundraiser =
+    fundraisers.find((fundraiser) => {
       return fundraiser.user_id === userID;
     }) || {};
 
@@ -24,12 +22,6 @@ export default function Dashboard(props) {
     </Route>;
   };
 
-  useEffect(() => {
-    axios.get(
-      `https://tt-46-vr-funding.herokuapp.com/api/users/:id/fundraisers`
-    );
-  }, []);
-
   return (
     <div className="dashboard container">
       <nav></nav>
@@ -38,7 +30,10 @@ export default function Dashboard(props) {
         Create a Fundraiser
       </Button>
       <div className="users-fundraisers">
-        <Fundraiser key={fundraiser.user_id} fundraisers={fundraiser.id} />
+        <Fundraiser key={userID} fundraisers={fundraisers.id} />
+        <Button className="edit-btn" onClick={update}>
+          Edit
+        </Button>
       </div>
     </div>
   );
