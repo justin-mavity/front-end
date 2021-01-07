@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
+
 import {
   Card,
   CardImg,
@@ -8,23 +11,11 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
-import { connect } from "react-redux";
+
 import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
 import FundraiserForm from "../Forms/FundraiserForm";
 
-const initialFundrasier = {
-  id: "",
-  title: "",
-  image: "",
-  city: "",
-  state: "",
-  description: "",
-  goal: "",
-  date_created: "",
-  amount_raised: "",
-};
-
-const FundraiserCard = (props) => {
+function FundraiserCard(props) {
   const {
     id,
     title,
@@ -35,7 +26,7 @@ const FundraiserCard = (props) => {
     goal,
     date_created,
     amount_raised,
-  } = props.fundraiser;
+  } = props.fundraisers;
 
   const [editing, setEditing] = useState(false);
   const [fundraiserToEdit, setFundraiserToEdit] = useState(initialFundrasier);
@@ -85,7 +76,7 @@ const FundraiserCard = (props) => {
       </Card>
     </div>
   );
-};
+}
 
 const mapStateToProps = (state) => {
   return {

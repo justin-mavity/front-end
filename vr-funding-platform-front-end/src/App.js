@@ -12,6 +12,7 @@ import axios from "axios";
 export default function App() {
   const [fundraisers, setFundrasiers] = useState([]);
   const [onDashboard, setOnDashboard] = useState(false);
+  const [onHome, setOnHome] = useState(false);
 
   useEffect(() => {
     axios
@@ -36,7 +37,7 @@ export default function App() {
           <FunderaiserList fundasiers={fundraisers} />
         </Route>
         <Route path="/">
-          <Home />
+          <Home onHome={setOnHome} />
         </Route>
       </Switch>
     </div>

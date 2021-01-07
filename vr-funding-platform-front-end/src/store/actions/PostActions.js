@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 
 export const FETCH_FUNDRAISERS_START = "FETCH_FUNDRAISERS_START";
@@ -6,12 +7,12 @@ export const FETCH_FUNDRAISERS_ERROR = "FETCH_FUNDRAISERS_ERROR";
 
 export const fetchFundraisers = (id) => (dispatch) => {
   dispatch({ type: FETCH_FUNDRAISERS_START });
-  axiosWithAuth()
-    .get("api/fundraisers")
+  axios
+    .get("https://tt-46-vr-funding.herokuapp.com/api/fundraisers")
     .then((res) => {
       dispatch({
         type: FETCH_FUNDRAISERS_SUCCESS,
-        payload: res.data.fundraisers,
+        payload: res.data,
       });
     })
     .catch((err) => {

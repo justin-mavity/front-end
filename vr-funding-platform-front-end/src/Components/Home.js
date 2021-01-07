@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { fetchFundraisers } from "../store/actions/PostActions";
 import FundraiserList from "./FundraiserCard";
 
 import "./Home.css";
 
-export default function Home(props) {
+function Home(props) {
+  console.log(props);
   const { fundraisers } = props;
   const history = useHistory();
   const routeToLogin = () => {
     history.push("/login");
   };
+  useEffect(() => {
+    props.fetchFundraisers(localStorage.getItem("user_id"));
+  }, []);
   return (
     <div className="home-wrapper">
       <div id="sidebar">
@@ -86,10 +92,27 @@ export default function Home(props) {
         <div className="fundraiser-list">
           <div className="inner">
             <h3>Browse Available Fundraisers</h3>
-            {<FundraiserList fundraisers={fundraisers} />}
+            {fundraisers && fundraisers.length > 0 ? (
+              fundraisers.map((item) => {
+                return <FundraiserList fundraiser={item} key={item.id} />;
+              })
+            ) : (
+              <p>
+                Nothing to see here... <br />
+                Just a man enjoying some 'skrat... <br />
+                Move along...
+              </p>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    fundraisers: state.fundraisers,
+  };
+};
+export default connect(mapStateToProps, { fetchFundraisers })(Home);
