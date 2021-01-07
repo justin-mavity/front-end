@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
+
 import {
   Card,
   CardImg,
@@ -11,7 +14,7 @@ import {
 
 import FundraiserForm from "../Forms/FundraiserForm";
 
-export default function FundraiserCard(props) {
+function FundraiserCard(props) {
   const {
     id,
     title,
@@ -22,7 +25,8 @@ export default function FundraiserCard(props) {
     goal,
     date_created,
     amount_raised,
-  } = props.fundraiser;
+  } = props.fundraisers;
+
   const [editing, setEditing] = useState(false);
   const [fundraiserToEdit, setFundraiserToEdit] = useState([]);
   const history = useHistory();
@@ -87,3 +91,12 @@ export default function FundraiserCard(props) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    fundraisers: state.fundraisers,
+  };
+};
+export default connect(mapStateToProps, { deleteFundraiser, editFundraiser })(
+  FundraiserCard
+);
