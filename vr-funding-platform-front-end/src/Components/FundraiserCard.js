@@ -9,7 +9,7 @@ import {
   CardSubtitle,
 } from "reactstrap";
 import { connect } from "react-redux";
-import { editFundraiser, deleteFundraiser } from "../actions/Actions";
+import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
 import FundraiserForm from "../Forms/FundraiserForm";
 
 const initialFundrasier = {
