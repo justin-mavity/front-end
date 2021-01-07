@@ -1,4 +1,4 @@
-import axiosWithAuth from "../utils/axiosWithAuth";
+import axiosWithAuth from "../../utils/axiosWithAuth";
 
 export const FETCH_FUNDRAISERS_START = "FETCH_FUNDRAISERS_START";
 export const FETCH_FUNDRAISERS_SUCCESS = "FETCH_FUNDRAISERS_SUCCESS";
@@ -7,9 +7,12 @@ export const FETCH_FUNDRAISERS_ERROR = "FETCH_FUNDRAISERS_ERROR";
 export const fetchFundraisers = (id) => (dispatch) => {
   dispatch({ type: FETCH_FUNDRAISERS_START });
   axiosWithAuth()
-    .get("api/journal/FUNDRAISERS")
+    .get("api/fundraisers")
     .then((res) => {
-      dispatch({ type: FETCH_FUNDRAISERS_SUCCESS, payload: res.data.journal });
+      dispatch({
+        type: FETCH_FUNDRAISERS_SUCCESS,
+        payload: res.data.fundraisers,
+      });
     })
     .catch((err) => {
       dispatch({ type: FETCH_FUNDRAISERS_ERROR, payload: err.message });
@@ -26,10 +29,10 @@ export const addFundraiser = (
   initialFormValues
 ) => (dispatch) => {
   axiosWithAuth()
-    .fundraiser("api/fundraisers", newFundraiser)
+    .post("api/fundraisers", newFundraiser)
     .then((res) => {
       console.log(res);
-      dispatch({ type: FUNDRAISER_ADD, payload: res.data.FUNDRAISERS });
+      dispatch({ type: FUNDRAISER_ADD, payload: res.data.fundraiser });
       history.push("/dashboard");
     })
     .catch((err) => {
@@ -66,7 +69,7 @@ export const editFundraiser = (id, data) => (dispatch) => {
     .put(`api/fundraisers/${id}`, data)
     .then((res) => {
       console.log(res);
-      dispatch({ type: FUNDRAISER_EDIT, payload: res.data.FUNDRAISERS });
+      dispatch({ type: FUNDRAISER_EDIT, payload: res.data.fundraiser });
     })
     .catch((err) => {
       console.log(err);
