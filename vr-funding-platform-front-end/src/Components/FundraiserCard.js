@@ -8,10 +8,23 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
-
+import { connect } from "react-redux";
+import { editFundraiser, deleteFundraiser } from "../actions/Actions";
 import FundraiserForm from "../Forms/FundraiserForm";
 
-export default function FundraiserCard(props) {
+const initialFundrasier = {
+  id: "",
+  title: "",
+  image: "",
+  city: "",
+  state: "",
+  description: "",
+  goal: "",
+  date_created: "",
+  amount_raised: "",
+};
+
+const FundraiserCard = (props) => {
   const {
     id,
     title,
@@ -23,8 +36,9 @@ export default function FundraiserCard(props) {
     date_created,
     amount_raised,
   } = props.fundraiser;
+
   const [editing, setEditing] = useState(false);
-  const [fundraiserToEdit, setFundraiserToEdit] = useState([]);
+  const [fundraiserToEdit, setFundraiserToEdit] = useState(initialFundrasier);
   const history = useHistory();
 
   const fundraiserEdit = (edit) => {
@@ -65,25 +79,19 @@ export default function FundraiserCard(props) {
         </div>
         {editing && (
           <form onSubmit={save}>
-            <h2>Edit Fundraiser</h2>
-            <div className="edit">
-              <label>
-                Title:
-                <input
-                  className="form-control"
-                  placeholder="Title"
-                  onChange={(evt) =>
-                    setFundraiserToEdit({
-                      ...fundraiserEdit,
-                      title: evt.target.value,
-                    })
-                  }
-                />
-              </label>
-            </div>
+            <FundraiserForm key={id} />
           </form>
         )}
       </Card>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    fundraisers: state.fundraisers,
+  };
+};
+export default connect(mapStateToProps, { deleteFundraiser, editFundraiser })(
+  FundraiserCard
+);
