@@ -9,14 +9,23 @@ import "./Home.css";
 
 function Home(props) {
   console.log(props);
+
   const { fundraisers } = props;
+
   const history = useHistory();
+
   const routeToLogin = () => {
     history.push("/login");
   };
+
+  const routeToRegister = () => {
+    history.push("/register");
+  };
+
   useEffect(() => {
     props.fetchFundraisers(localStorage.getItem("user_id"));
   }, []);
+
   return (
     <div className="home-wrapper">
       <div id="sidebar">
@@ -42,6 +51,15 @@ function Home(props) {
                   Sign In
                 </a>
               </li>
+              <li>
+                <a
+                  href="register"
+                  className="scrolly active-locked"
+                  onClick={routeToRegister}
+                >
+                  Register
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -55,7 +73,7 @@ function Home(props) {
               access to business training, project capital raising and
               mentoring.
             </p>
-            <ul className="actions">
+            {/* <ul className="actions">
               <li>
                 <button
                   type="button"
@@ -65,7 +83,7 @@ function Home(props) {
                   Log In
                 </button>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
         <div id="about" className="wrapper style2">

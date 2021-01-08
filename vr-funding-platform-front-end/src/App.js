@@ -24,9 +24,9 @@ export default function App() {
 
   return (
     <div className="app">
-      <div className="title">
+      {/* <div className="title">
         <h1>VR Funding Platform</h1>
-      </div>
+      </div> */}
       <Switch>
         <Route path="/login">
           <Login />

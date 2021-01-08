@@ -41,7 +41,7 @@ function HomeFundraiserCard(props) {
             {amount_raised} out of {goal}
           </CardText>
         </CardBody>
-        <div clasName="donate-link">
+        <div className="donate-link">
           <Link to="/donate">
             <button>Donate</button>
           </Link>
