@@ -14,7 +14,20 @@ import {
 
 import FundraiserForm from "../Forms/FundraiserForm";
 
+const initialFundraiser = {
+  id: "",
+  title: "",
+  image: "",
+  city: "",
+  state: "",
+  description: "",
+  goal: "",
+  date_created: "",
+  amount_raised: "",
+};
+
 function FundraiserCard(props) {
+  console.log(props.fundraiser);
   const {
     id,
     title,
@@ -25,10 +38,10 @@ function FundraiserCard(props) {
     goal,
     date_created,
     amount_raised,
-  } = props.fundraisers;
+  } = props.fundraiser;
 
   const [editing, setEditing] = useState(false);
-  const [fundraiserToEdit, setFundraiserToEdit] = useState([]);
+  const [fundraiserToEdit, setFundraiserToEdit] = useState(initialFundraiser);
   const history = useHistory();
 
   const fundraiserEdit = (edit) => {
