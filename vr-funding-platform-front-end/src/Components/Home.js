@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchFundraisers } from "../store/actions/PostActions";
-import FundraiserList from "./FundraiserCard";
+import HomeFundraiserCard from "./HomeFundraiserCard";
 
 import "./Home.css";
 
@@ -94,7 +94,7 @@ function Home(props) {
             <h3>Browse Available Fundraisers</h3>
             {fundraisers && fundraisers.length > 0 ? (
               fundraisers.map((item) => {
-                return <FundraiserList fundraiser={item} key={item.id} />;
+                return <HomeFundraiserCard fundraiser={item} key={item.id} />;
               })
             ) : (
               <p>
