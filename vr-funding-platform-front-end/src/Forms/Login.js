@@ -2,17 +2,85 @@ import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
+import styled from "styled-components";
 
 import * as yup from "yup";
 
+const StyledPage = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledHeader = styled.h2`
+  margin-top: 7.5%;
+  font-size: 3rem;
+  color: #a4a0b0;
+`;
+
+const StyledForm = styled.form`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6%;
+`;
+
+const StyledEmailContainer = styled.div`
+  width: 25%;
+  margin-left: 4.25%;
+`;
+
+const StyledPasswordContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledInput = styled.input`
+  width: 75%;
+  background: none;
+  outline: none;
+`;
+
+const StyledEmailBorder = styled.div`
+  width: 76.25%;
+  height: 0.2em;
+  margin-left: 13.45%;
+  margin-bottom: 10%;
+  border-radius: 0.2em;
+  background: linear-gradient(to right, #5e42a6, #b74e91);
+`;
+
+const StyledPasswordBorder = styled.div`
+  width: 76.25%;
+  height: 0.2em;
+  margin-left: 22%;
+  margin-bottom: 10%;
+  border-radius: 0.2em;
+  background: linear-gradient(to right, #5e42a6, #b74e91);
+`;
+
+const StyledButtonContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledButton = styled.button`
+  width: 40%;
+  margin: 0 5%;
+`;
+
 function Login() {
   const [form, setForm] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -21,7 +89,7 @@ function Login() {
   const history = useHistory();
 
   const schema = yup.object().shape({
-    username: yup.string().required("username is required"),
+    email: yup.string().required("email is required"),
     password: yup
       .string()
       .required("Password is required")
@@ -50,11 +118,11 @@ function Login() {
   const submit = (e) => {
     e.preventDefault();
     const newUser = {
-      username: form.username.trim(),
+      email: form.email.trim(),
       password: form.password.trim(),
     };
     axios
-      .post("https://tt-46-vr-funding.herokuapp.com/api/auth/login", newUser)
+      .post("https://tt-46-vr-funding.herokuapp.com/auth/login", newUser)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         history.push("/dashboard");
@@ -64,28 +132,28 @@ function Login() {
         console.log("Login error: ", err);
       });
   };
+
   return (
-    <div className="login">
-      <h2>Login</h2>
-      <br />
-      <div className="signup">
-        <Form onSubmit={submit}>
-          <FormGroup>
-            <Label for="username">Username: </Label>
-            <Input
+    <StyledPage className="login">
+      <StyledHeader>Login</StyledHeader>
+      <StyledPage className="signup">
+        <StyledForm onSubmit={submit}>
+          <StyledEmailContainer>
+            <Label for="email">Email: </Label>
+            <StyledInput
               className="form-control"
               onChange={change}
-              value={form.username}
-              name="username"
+              value={form.email}
+              name="email"
               type="text"
-              placeholder="Your Username"
+              placeholder="Email"
             />
-          </FormGroup>
-          <div style={{ color: "red" }}>{errors.username}</div>
-          <br />
-          <FormGroup>
+            <StyledEmailBorder />
+          </StyledEmailContainer>
+          <div style={{ color: "red" }}>{errors.email}</div>
+          <StyledPasswordContainer>
             <Label for="password">Password: </Label>
-            <Input
+            <StyledInput
               className="form-control"
               onChange={change}
               value={form.password}
@@ -93,21 +161,18 @@ function Login() {
               type="text"
               placeholder="Password"
             />
-          </FormGroup>
+            <StyledPasswordBorder />
+          </StyledPasswordContainer>
           <div style={{ color: "red" }}>{errors.password}</div>
-          <br />
-          <Button className="form-control" disabled={disabled}>
-            Submit
-          </Button>
-          <br />
-          <br />
-          <Link to="/Register">
-            <Button>New User?</Button>
-          </Link>
-        </Form>
-        <br />
-      </div>
-    </div>
+          <StyledButtonContainer>
+            <StyledButton disabled={disabled}>Submit</StyledButton>
+            <Link to="/Register">
+              <StyledButton>New User?</StyledButton>
+            </Link>
+          </StyledButtonContainer>
+        </StyledForm>
+      </StyledPage>
+    </StyledPage>
   );
 }
 
