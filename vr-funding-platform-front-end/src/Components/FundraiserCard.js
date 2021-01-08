@@ -1,18 +1,34 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 import { connect } from "react-redux";
+import { CardImg, CardText, CardTitle, CardSubtitle } from "reactstrap";
+
 import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
 
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-} from "reactstrap";
+const StyledFundraiserCard = styled.div`
+  width: 30%;
+  margin: 3%;
+`;
 
-import axios from "axios";
+const StyledCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledCardBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledText = styled.p`
+  text-align: center;
+`;
+
 const initialFundraiser = {
   title: "",
   image: "",
@@ -39,7 +55,6 @@ function FundraiserCard(props) {
     goal,
     date_created,
     amount_raised,
-    user_id,
   } = props.fundraiser;
 
   const fundraiserEdit = (edit) => {
@@ -60,27 +75,26 @@ function FundraiserCard(props) {
   };
 
   return (
-    <div className="fundrasier-wrapper">
-      <Card key={id}>
-        <CardImg top width="100%" src={image} alt="Card image cap" />
-        <span className="fundraiser-date">{date_created}</span>
-        <CardBody>
+    <StyledFundraiserCard className="fundrasier-wrapper">
+      <StyledCard key={id}>
+        <CardImg top width="75%" src={image} alt="Card image cap" />
+        <StyledCardBody>
+          <span className="fundraiser-date">{date_created}</span>
           <CardTitle tag="h4">{title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             {city}, {state}
           </CardSubtitle>
-          <CardText>{description}</CardText>
+          <StyledText>{description}</StyledText>
           <CardText>
-            {amount_raised} out of {goal}
+            {amount_raised} raised of {goal}
           </CardText>
-        </CardBody>
+        </StyledCardBody>
         <div className="btn-group">
           <button onClick={fundraiserEdit}>Edit</button>
           <button onClick={fundraiserDelete}>Delete</button>
         </div>
-      </Card>
-      <br />
-      <br />
+      </StyledCard>
+
       {editing && (
         <form onSubmit={save}>
           <h2>Edit Post</h2>
@@ -100,7 +114,6 @@ function FundraiserCard(props) {
               />
             </label>
             &nbsp;
-            <br></br>
             <label>
               City:
               <input
@@ -116,7 +129,6 @@ function FundraiserCard(props) {
               />
             </label>
             &nbsp;
-            <br></br>
             <label>
               State:
               <input
@@ -132,7 +144,6 @@ function FundraiserCard(props) {
               />
             </label>
             &nbsp;
-            <br></br>
             <label>
               Description:
               <input
@@ -148,7 +159,6 @@ function FundraiserCard(props) {
               />
             </label>
             &nbsp;
-            <br></br>
             <label>
               Goal:
               <input
@@ -165,7 +175,7 @@ function FundraiserCard(props) {
             </label>
             <div></div>
           </div>
-          <br></br>
+
           <button className="edit-button-card" type="submit">
             Save
           </button>
@@ -178,7 +188,7 @@ function FundraiserCard(props) {
           </button>
         </form>
       )}
-    </div>
+    </StyledFundraiserCard>
   );
 }
 

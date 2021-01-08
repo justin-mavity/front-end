@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchFundraisers } from "../store/actions/PostActions";
 import HomeFundraiserCard from "./HomeFundraiserCard";
-import FundraiserCard from "./FundraiserCard";
 
 import "./Home.css";
 
@@ -110,7 +109,7 @@ function Home(props) {
         </div>
         <div className="fundraiser-list">
           <div className="inner">
-            <h3>Browse Available Fundraisers</h3>
+            <h3>Browse Fundraisers</h3>
             {fundraisers && fundraisers.length > 0 ? (
               fundraisers.map((item) => {
                 return <HomeFundraiserCard fundraiser={item} key={item.id} />;

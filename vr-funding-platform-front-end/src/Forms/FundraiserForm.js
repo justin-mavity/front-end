@@ -1,31 +1,114 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Form, FormGroup, Input, Label, Button, Row, Col } from "reactstrap";
+import { useHistory, Link } from "react-router-dom";
+import { Label } from "reactstrap";
 import * as yup from "yup";
-import axios from "axios";
+import styled from "styled-components";
+import { connect } from "react-redux";
+
+import { addFundraiser } from "../store/actions/PostActions";
+
+const StyledPage = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledHeader = styled.h2`
+  margin-top: 7.5%;
+  font-size: 3rem;
+  color: #a4a0b0;
+`;
+
+const StyledForm = styled.form`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6%;
+`;
+
+const StyledImageContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledTitleContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledCityContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledStateContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledDescriptionContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledGoalContainer = styled.div`
+  width: 25%;
+`;
+
+const StyledInputBorder = styled.div`
+  width: 100%;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  background: none;
+  outline: none;
+`;
+
+const StyledBorder = styled.div`
+  width: 100%;
+  height: 0.2em;
+  margin-bottom: 10%;
+  border-radius: 0.2em;
+  background: linear-gradient(to right, #5e42a6, #b74e91);
+`;
+
+const StyledError = styled.div`
+  color: red;
+  font-size: 1rem;
+`;
+
+const StyledButtonContainer = styled.div`
+  width: 50%;
+`;
+
+const StyledButton = styled.button`
+  width: 40%;
+  margin: 0 5% 5%;
+`;
 
 const initialFormValues = {
-  user_id: "",
   title: "",
   image: "",
   city: "",
   state: "",
   description: "",
   goal: "",
-  date_created: "",
 };
 
 const initialFormErrors = {
   title: "",
   image: "",
-  location: "",
+  city: "",
+  state: "",
   description: "",
   goal: "",
 };
 
 const initialDisabled = true;
 
-export default function FundraiserForm(props) {
+function FundraiserForm(props) {
   const [errors, setErrors] = useState(initialFormErrors);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(initialDisabled);
@@ -74,9 +157,8 @@ export default function FundraiserForm(props) {
       state: formValues.state.trim(),
       description: formValues.description.trim(),
       goal: formValues.goal.trim(),
-      date_created: Date.now(),
-      user_id: localStorage.getItem("user_id"),
     };
+    console.log("New Fundraiser: ", newFundraiser);
     props.addFundraiser(
       newFundraiser,
       history,
@@ -90,113 +172,113 @@ export default function FundraiserForm(props) {
   }, [formValues]);
 
   return (
-    <>
-      <div className="project-form container">
-        <h2>Create a Project</h2>
-        <Form onSubmit={onSubmit}>
-          <FormGroup as={Row} controlId="formHorizontalTitle">
-            <Label for="title" column sm={2}>
-              Title
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="text"
-                placeholder="Title of project"
-                name="title"
-                value={formValues.title}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalLocation">
-            <Label for="city" column sm={2}>
-              City
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="text"
-                placeholder="City"
-                name="city"
-                value={formValues.city}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalLocation">
-            <Label for="state" column sm={2}>
-              State
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="text"
-                placeholder="State"
-                name="state"
-                value={formValues.state}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalDescription">
-            <Label for="description" column sm={2}>
-              Description
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="textarea"
-                placeholder="Description"
-                name="description"
-                value={formValues.description}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalDetailedInfo">
-            <Label for="detailedInfo" column sm={2}>
-              Detailed Information
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="text"
-                placeholder="Detailed Information"
-                name="detailedInfo"
-                value={formValues.detailedInfo}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalImageUrl">
-            <Label for="image" column sm={2}>
-              ImageUrl
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="text"
-                placeholder="image"
-                name="image"
-                value={formValues.image}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup as={Row} controlId="formHorizontalgoal">
-            <Label for="goal" column sm={2}>
-              Askin Amount
-            </Label>
-            <Col sm={10}>
-              <Input
-                type="text"
-                placeholder="Asking Amount"
-                name="goal"
-                value={formValues.goal}
-                onChange={onChange}
-              />
-            </Col>
-          </FormGroup>
-          <Button size="lg" disabled={disabled}>
+    <StyledPage className="project-form container">
+      <StyledHeader>Start A Fundraiser</StyledHeader>
+      <StyledForm onSubmit={onSubmit}>
+        <StyledImageContainer>
+          <Label>Image: </Label>
+          <StyledInputBorder>
+            <StyledInput
+              type="text"
+              placeholder="Image"
+              name="image"
+              value={formValues.image}
+              onChange={onChange}
+            />
+            <StyledBorder />
+          </StyledInputBorder>
+        </StyledImageContainer>
+
+        <StyledTitleContainer>
+          <Label>Title: </Label>
+          <StyledInputBorder>
+            <StyledInput
+              type="text"
+              placeholder="Title"
+              name="title"
+              value={formValues.title}
+              onChange={onChange}
+            />
+            <StyledBorder />
+          </StyledInputBorder>
+        </StyledTitleContainer>
+
+        <StyledCityContainer>
+          <Label>City: </Label>
+          <StyledInputBorder>
+            <StyledInput
+              type="text"
+              placeholder="City"
+              name="city"
+              value={formValues.city}
+              onChange={onChange}
+            />
+            <StyledBorder />
+          </StyledInputBorder>
+        </StyledCityContainer>
+
+        <StyledStateContainer>
+          <Label>State: </Label>
+          <StyledInputBorder>
+            <StyledInput
+              type="text"
+              placeholder="State"
+              name="state"
+              value={formValues.state}
+              onChange={onChange}
+            />
+            <StyledBorder />
+          </StyledInputBorder>
+        </StyledStateContainer>
+
+        <StyledDescriptionContainer>
+          <Label>Description: </Label>
+          <StyledInputBorder>
+            <StyledInput
+              type="text"
+              placeholder="Description"
+              name="description"
+              value={formValues.description}
+              onChange={onChange}
+            />
+            <StyledBorder />
+          </StyledInputBorder>
+        </StyledDescriptionContainer>
+
+        <StyledGoalContainer>
+          <Label>Goal:</Label>
+          <StyledInputBorder>
+            <StyledInput
+              type="text"
+              placeholder="Goal"
+              name="goal"
+              value={formValues.goal}
+              onChange={onChange}
+            />
+            <StyledBorder />
+          </StyledInputBorder>
+        </StyledGoalContainer>
+
+        <StyledButtonContainer>
+          <Link to="/dashboard">
+            <StyledButton className="form-control">Cancel</StyledButton>
+          </Link>
+          <StyledButton
+            className="form-control"
+            disabled={disabled}
+            onSubmit={onSubmit}
+          >
             Submit
-          </Button>
-        </Form>
-      </div>
-    </>
+          </StyledButton>
+        </StyledButtonContainer>
+      </StyledForm>
+    </StyledPage>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    fundraisers: state.fundraisers,
+  };
+};
+export default connect(mapStateToProps, { addFundraiser })(FundraiserForm);
