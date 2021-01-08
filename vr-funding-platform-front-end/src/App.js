@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Login from "./Forms/Login";
 import Register from "./Forms/Register";
 import FundraiserForm from "./Forms/FundraiserForm";
-import FunderaiserList from "./Components/FundraiserCard";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Donate from "./Forms/Donate";
@@ -11,7 +10,6 @@ import axios from "axios";
 
 export default function App() {
   const [fundraisers, setFundrasiers] = useState([]);
-  const [onDashboard, setOnDashboard] = useState(false);
   const [onHome, setOnHome] = useState(false);
 
   useEffect(() => {
