@@ -3,6 +3,8 @@ import { Switch, Route } from "react-router-dom";
 import Login from "./Forms/Login";
 import Register from "./Forms/Register";
 import FundraiserForm from "./Forms/FundraiserForm";
+import FundraiserList from "./Components/FundraiserList";
+import Fundraiser from "./Components/Fundraiser";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Donate from "./Forms/Donate";
@@ -39,6 +41,12 @@ export default function App() {
         </Route>
         <Route path="/donate">
           <Donate fundraisers={fundraisers} />
+        </Route>
+        <Route path="/fundraisers/:id">
+          <Fundraiser fundraisers={fundraisers} />
+        </Route>
+        <Route path="/fundraisers">
+          <FundraiserList fundraisers={fundraisers} />
         </Route>
         <Route path="/">
           <Home onHome={setOnHome} />

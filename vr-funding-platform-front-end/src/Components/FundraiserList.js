@@ -40,8 +40,20 @@ const initialFundraiser = {
   amount_raised: "",
 };
 
+export default function FundraiserList(props) {
+  const { fundraisers } = props;
+
+  return (
+    <div>
+      {fundraisers.map((fundraiser) => (
+        <FundraiserCard key={fundraiser.id} fundraiser={fundraiser} />
+      ))}
+    </div>
+  );
+}
+
 function FundraiserCard(props) {
-  console.log(props.fundraiser);
+  console.log(props.fundraisers);
   const [editing, setEditing] = useState(false);
   const [fundraiserToEdit, setFundraiserToEdit] = useState(initialFundraiser);
   const history = useHistory();
@@ -55,7 +67,11 @@ function FundraiserCard(props) {
     goal,
     date_created,
     amount_raised,
-  } = props.fundraiser;
+  } = props.fundraisers;
+
+  const routeToFundraiser = () => {
+    history.push(`/fundariser/${id}`);
+  };
 
   const fundraiserEdit = (edit) => {
     setEditing(true);
@@ -76,7 +92,7 @@ function FundraiserCard(props) {
 
   return (
     <StyledFundraiserCard className="fundrasier-wrapper">
-      <StyledCard key={id}>
+      <StyledCard key={id} onClick={routeToFundraiser}>
         <CardImg top width="75%" src={image} alt="Card image cap" />
         <StyledCardBody>
           <span className="fundraiser-date">{date_created}</span>
@@ -191,12 +207,3 @@ function FundraiserCard(props) {
     </StyledFundraiserCard>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    fundraisers: state.fundraisers,
-  };
-};
-export default connect(mapStateToProps, { deleteFundraiser, editFundraiser })(
-  FundraiserCard
-);

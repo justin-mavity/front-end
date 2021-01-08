@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button } from "reactstrap";
 import styled from "styled-components";
-import FundrasierCard from "./FundraiserCard";
+import FundrasierCard from "./FundraiserList";
 import { fetchFundraisers } from "../store/actions/PostActions";
 
 const StyledNav = styled.nav`
