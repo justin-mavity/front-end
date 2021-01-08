@@ -1,43 +1,67 @@
-import React from "react";
-import { useParams, useRouteMatch } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useRouteMatch, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
+import FundraiserForm from "../Forms/FundraiserForm";
 
-export default function Fundraiser(props) {
+const initialFundraiser = {
+  id: "",
+  title: "",
+  image: "",
+  city: "",
+  state: "",
+  description: "",
+  goal: "",
+  date_created: "",
+  amount_raised: "",
+};
+
+function Fundraiser(props) {
   const { fundraisers } = props;
-  const { url, path } = useRouteMatch();
-  console.log(url, "URL");
-  console.log(path, "PATH");
-
-  const { fundraiserID } = useParams();
-  const fundraiser =
-    fundraisers.find((fundraiser) => {
-      return fundraiser.id === fundraiserID;
-    }) || {};
+  const {
+    title,
+    image,
+    city,
+    state,
+    description,
+    goal,
+    date_created,
+    amount_raised,
+  } = props.fundraiser;
 
   return (
     <>
       <div className="fundraiser-wrapper">
         <div className="image-container">
           <div className="image">
-            <img src={fundraiser.image} alt={fundraiser.image} />
+            <img src={image} alt={image} />
           </div>
-          <span className="fundraiser-date">{fundraiser.date_created}</span>
+          <span className="fundraiser-date">{date_created}</span>
         </div>
-        <h3>{fundraiser.title}</h3>
+        <h3>{title}</h3>
         <div className="fundraiser-texts">
           <p>
-            {fundraiser.city}, {fundraiser.state}
+            {city}, {state}
           </p>
           <br />
           <br />
-          <p>{fundraiser.description}</p>
+          <p>{description}</p>
           <br />
           <br />
           <span className="goal-container">
-            {fundraiser.amount_raised} out of {fundraiser.goal}
+            {amount_raised} out of {goal}
           </span>
         </div>
-        <div clasName="donate-link"></div>
       </div>
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    fundraisers: state.fundraisers,
+  };
+};
+export default connect(mapStateToProps, { deleteFundraiser, editFundraiser })(
+  Fundraiser
+);

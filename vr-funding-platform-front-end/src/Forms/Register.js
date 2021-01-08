@@ -123,7 +123,7 @@ function Register() {
               className="form-control"
               onChange={change}
               name="password"
-              type="password"
+              type="text"
               value={form.password}
               placeholder="Your Password"
             />
@@ -151,9 +151,9 @@ function Register() {
             </Button>
 
             <br></br>
-            <Button>
-              <Link to="/Login">Already a user?</Link>
-            </Button>
+            <Link to="/Login">
+              <Button>Already a user?</Button>
+            </Link>
           </FormGroup>
         </Form>
       </div>

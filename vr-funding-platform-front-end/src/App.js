@@ -7,6 +7,7 @@ import FunderaiserList from "./Components/FundraiserCard";
 import Fundrasier from "./Components/Fundraiser";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
+import Donate from "./Forms/Donate";
 import axios from "axios";
 
 export default function App() {
@@ -33,8 +34,14 @@ export default function App() {
         <Route path={"/register"}>
           <Register />
         </Route>
-        <Route path={"/fundraiser-list"}>
-          <FunderaiserList fundasiers={fundraisers} />
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route path={"/fundraiser-form"}>
+          <FundraiserForm />
+        </Route>
+        <Route path="/donate">
+          <Donate fundraisers={fundraisers} />
         </Route>
         <Route path="/">
           <Home onHome={setOnHome} />
