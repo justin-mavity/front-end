@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
-import { PostReducer } from "./store/reducers/PostReducers";
+import { PostReducer } from "./store/reducers/postReducers";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const store = createStore(PostReducer, applyMiddleware(thunk, logger));

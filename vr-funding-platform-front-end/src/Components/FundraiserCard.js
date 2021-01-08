@@ -12,10 +12,8 @@ import {
   CardSubtitle,
 } from "reactstrap";
 
-import FundraiserForm from "../Forms/FundraiserForm";
-
+import axios from "axios";
 const initialFundraiser = {
-  id: "",
   title: "",
   image: "",
   city: "",
@@ -28,6 +26,9 @@ const initialFundraiser = {
 
 function FundraiserCard(props) {
   console.log(props.fundraiser);
+  const [editing, setEditing] = useState(false);
+  const [fundraiserToEdit, setFundraiserToEdit] = useState(initialFundraiser);
+  const history = useHistory();
   const {
     id,
     title,
@@ -38,11 +39,8 @@ function FundraiserCard(props) {
     goal,
     date_created,
     amount_raised,
+    user_id,
   } = props.fundraiser;
-
-  const [editing, setEditing] = useState(false);
-  const [fundraiserToEdit, setFundraiserToEdit] = useState(initialFundraiser);
-  const history = useHistory();
 
   const fundraiserEdit = (edit) => {
     setEditing(true);
@@ -80,27 +78,106 @@ function FundraiserCard(props) {
           <button onClick={fundraiserEdit}>Edit</button>
           <button onClick={fundraiserDelete}>Delete</button>
         </div>
-        {editing && (
-          <form onSubmit={save}>
-            <h2>Edit Fundraiser</h2>
-            <div className="edit">
-              <label>
-                Title:
-                <input
-                  className="form-control"
-                  placeholder="Title"
-                  onChange={(evt) =>
-                    setFundraiserToEdit({
-                      ...fundraiserEdit,
-                      title: evt.target.value,
-                    })
-                  }
-                />
-              </label>
-            </div>
-          </form>
-        )}
       </Card>
+      <br />
+      <br />
+      {editing && (
+        <form onSubmit={save}>
+          <h2>Edit Post</h2>
+          <div className="edit">
+            <label>
+              Title:
+              <input
+                className="form-control"
+                placeholder="Title"
+                onChange={(evt) =>
+                  setFundraiserToEdit({
+                    ...fundraiserToEdit,
+                    title: evt.target.value,
+                  })
+                }
+                value={fundraiserToEdit.title}
+              />
+            </label>
+            &nbsp;
+            <br></br>
+            <label>
+              City:
+              <input
+                className="form-control"
+                placeholder="City"
+                onChange={(evt) =>
+                  setFundraiserToEdit({
+                    ...fundraiserToEdit,
+                    city: evt.target.value,
+                  })
+                }
+                value={fundraiserToEdit.city}
+              />
+            </label>
+            &nbsp;
+            <br></br>
+            <label>
+              State:
+              <input
+                className="form-control"
+                placeholder="State"
+                onChange={(evt) =>
+                  setFundraiserToEdit({
+                    ...fundraiserToEdit,
+                    state: evt.target.value,
+                  })
+                }
+                value={fundraiserToEdit.state}
+              />
+            </label>
+            &nbsp;
+            <br></br>
+            <label>
+              Description:
+              <input
+                className="form-control"
+                placeholder="Description"
+                onChange={(evt) =>
+                  setFundraiserToEdit({
+                    ...fundraiserToEdit,
+                    description: evt.target.value,
+                  })
+                }
+                value={fundraiserToEdit.description}
+              />
+            </label>
+            &nbsp;
+            <br></br>
+            <label>
+              Goal:
+              <input
+                className="form-control"
+                placeholder="Goal"
+                onChange={(evt) =>
+                  setFundraiserToEdit({
+                    ...fundraiserToEdit,
+                    goal: evt.target.value,
+                  })
+                }
+                value={fundraiserToEdit.goal}
+              />
+            </label>
+            <div></div>
+          </div>
+          <br></br>
+          <button className="edit-button-card" type="submit">
+            Save
+          </button>
+          <br></br>
+          <button
+            className="edit-button-card"
+            onClick={() => setEditing(false)}
+          >
+            Cancel
+          </button>
+        </form>
+      )}
     </div>
   );
 }

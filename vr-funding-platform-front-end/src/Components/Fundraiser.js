@@ -1,64 +1,67 @@
-import React, { useEffect } from "react";
-import {
-  useParams,
-  Link,
-  useHistory,
-  Route,
-  useRouteMatch,
-} from "react-router-dom";
-import { Button } from "reactstrap";
-import Donate from "../Forms/Donate";
-import axios from "axios";
+import React, { useState } from "react";
+import { useParams, useRouteMatch, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { editFundraiser, deleteFundraiser } from "../store/actions/PostActions";
+import FundraiserForm from "../Forms/FundraiserForm";
 
-export default function Fundraiser(props) {
+const initialFundraiser = {
+  id: "",
+  title: "",
+  image: "",
+  city: "",
+  state: "",
+  description: "",
+  goal: "",
+  date_created: "",
+  amount_raised: "",
+};
+
+function Fundraiser(props) {
   const { fundraisers } = props;
-  const history = useHistory();
-  const { url, path } = useRouteMatch();
-  console.log(url, "URL");
-  console.log(path, "PATH");
-
-  const { fundraiserID } = useParams();
-  const fundraiser =
-    fundraisers.find((fundraiser) => {
-      return fundraiser.id == fundraiserID;
-    }) || {};
-
-  const close = () => {
-    history.push("/fundraisers");
-  };
+  const {
+    title,
+    image,
+    city,
+    state,
+    description,
+    goal,
+    date_created,
+    amount_raised,
+  } = props.fundraiser;
 
   return (
-    <div className="fundraiser-wrapper">
-      <div className="image-container">
-        <div className="image">
-          <img src={fundraiser.image} alt={fundraiser.image} />
+    <>
+      <div className="fundraiser-wrapper">
+        <div className="image-container">
+          <div className="image">
+            <img src={image} alt={image} />
+          </div>
+          <span className="fundraiser-date">{date_created}</span>
         </div>
-        <span className="fundraiser-date">{fundraiser.date_created}</span>
+        <h3>{title}</h3>
+        <div className="fundraiser-texts">
+          <p>
+            {city}, {state}
+          </p>
+          <br />
+          <br />
+          <p>{description}</p>
+          <br />
+          <br />
+          <span className="goal-container">
+            {amount_raised} out of {goal}
+          </span>
+        </div>
       </div>
-      <h3>{fundraiser.title}</h3>
-      <div className="fundraiser-texts">
-        <p>
-          {fundraiser.city}, {fundraiser.state}
-        </p>
-        <br />
-        <br />
-        <p>{fundraiser.description}</p>
-        <br />
-        <br />
-        <span className="goal-container">
-          {fundraiser.amount_raised} out of {fundraiser.goal}
-        </span>
-      </div>
-      <div clasName="donate-link">
-        <Link to={`${url}/donate`}>Donate</Link>
-      </div>
-      <Button className="close btn" onclick={close}>
-        Close
-      </Button>
-
-      <Route path={`${path}/donate`}>
-        <Donate key={fundraiser.id} />
-      </Route>
-    </div>
+    </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    fundraisers: state.fundraisers,
+  };
+};
+export default connect(mapStateToProps, { deleteFundraiser, editFundraiser })(
+  Fundraiser
+);

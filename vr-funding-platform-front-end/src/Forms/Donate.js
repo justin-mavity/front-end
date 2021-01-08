@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import {
   Button,
   Form,
@@ -10,7 +11,7 @@ import {
 } from "reactstrap";
 
 export default function Donate(props) {
-  const { projectId } = props;
+  const { fundraisers } = props;
   const [donor, setDonor] = useState({ first: "", last: "" });
   const [amount, setAmount] = useState(0);
 
@@ -22,7 +23,7 @@ export default function Donate(props) {
 
   const donate = (evt) => {
     evt.preventDefault();
-    projectId.map((project) => {
+    fundraisers.map((project) => {
       return {
         ...project,
         [project.amount_raised]: project.amount_raised + amount,
@@ -32,7 +33,7 @@ export default function Donate(props) {
   return (
     <Form>
       <FormGroup>
-        <Label for="firstname">Your First Name</Label>
+        <Label for="firstname">Your First Name : </Label>
         <Input
           type="text"
           name="first"
@@ -42,7 +43,7 @@ export default function Donate(props) {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="lastname">Your Last Name</Label>
+        <Label for="lastname">Your Last Name : </Label>
         <Input
           type="text"
           name="last"
@@ -52,7 +53,7 @@ export default function Donate(props) {
         />
       </FormGroup>
       <FormGroup>
-        <InputGroup>
+        <InputGroup className="amount group">
           <InputGroupAddon addonType="prepend">$</InputGroupAddon>
           <Input
             placeholder="Amount"

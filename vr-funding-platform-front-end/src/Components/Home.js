@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchFundraisers } from "../store/actions/PostActions";
 import HomeFundraiserCard from "./HomeFundraiserCard";
+import FundraiserCard from "./FundraiserCard";
 
 import "./Home.css";
 

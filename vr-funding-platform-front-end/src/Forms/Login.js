@@ -90,8 +90,8 @@ function Login() {
               onChange={change}
               value={form.password}
               name="password"
-              type="password"
-              placeholder="Your Username"
+              type="text"
+              placeholder="Password"
             />
           </FormGroup>
           <div style={{ color: "red" }}>{errors.password}</div>
@@ -101,9 +101,9 @@ function Login() {
           </Button>
           <br />
           <br />
-          <Button>
-            <Link to="/Register">New User?</Link>
-          </Button>
+          <Link to="/Register">
+            <Button>New User?</Button>
+          </Link>
         </Form>
         <br />
       </div>
