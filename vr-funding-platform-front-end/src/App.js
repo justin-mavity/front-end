@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import Login from "./Forms/Login";
 import Register from "./Forms/Register";
 import FundraiserForm from "./Forms/FundraiserForm";
 import FunderaiserList from "./Components/FundraiserCard";
-import Fundrasier from "./Components/Fundraiser";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Donate from "./Forms/Donate";
