@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Label } from "reactstrap";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -33,32 +33,33 @@ const StyledForm = styled.form`
 
 const StyledEmailContainer = styled.div`
   width: 25%;
-  margin-left: 4.25%;
 `;
 
 const StyledPasswordContainer = styled.div`
   width: 25%;
 `;
 
+const StyledInputBorder = styled.div`
+  width: 100%;
+`;
+
 const StyledInput = styled.input`
-  width: 75%;
+  width: 100%;
   background: none;
   outline: none;
 `;
 
 const StyledEmailBorder = styled.div`
-  width: 76.25%;
+  width: 100%;
   height: 0.2em;
-  margin-left: 13.45%;
   margin-bottom: 10%;
   border-radius: 0.2em;
   background: linear-gradient(to right, #5e42a6, #b74e91);
 `;
 
 const StyledPasswordBorder = styled.div`
-  width: 76.25%;
+  width: 100%;
   height: 0.2em;
-  margin-left: 22%;
   margin-bottom: 10%;
   border-radius: 0.2em;
   background: linear-gradient(to right, #5e42a6, #b74e91);
@@ -69,8 +70,8 @@ const StyledButtonContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  width: 40%;
-  margin: 0 5%;
+  width: 49%;
+  margin: 0 0.5%;
 `;
 
 function Login() {
@@ -89,16 +90,16 @@ function Login() {
   const history = useHistory();
 
   const schema = yup.object().shape({
-    email: yup.string().required("email is required"),
+    email: yup.string().required("Please Input Your Email"),
     password: yup
       .string()
-      .required("Password is required")
-      .min(6, "Password is required and must be at least 6 characters long"),
+      .required("Please Input Your Password")
+      .min(6, "Password Must Be At Least 6 Characters Long"),
   });
 
   useEffect(() => {
     schema.isValid(form).then((valid) => setDisabled(!valid));
-  }, [form]);
+  }, [form, schema]);
 
   const change = (e) => {
     const { value, name } = e.target;
@@ -140,28 +141,33 @@ function Login() {
         <StyledForm onSubmit={submit}>
           <StyledEmailContainer>
             <Label for="email">Email: </Label>
-            <StyledInput
-              className="form-control"
-              onChange={change}
-              value={form.email}
-              name="email"
-              type="text"
-              placeholder="Email"
-            />
-            <StyledEmailBorder />
+            <StyledInputBorder>
+              <StyledInput
+                className="form-control"
+                onChange={change}
+                value={form.email}
+                name="email"
+                type="email"
+                placeholder="Email"
+              />
+              <StyledEmailBorder />
+            </StyledInputBorder>
           </StyledEmailContainer>
           <div style={{ color: "red" }}>{errors.email}</div>
+
           <StyledPasswordContainer>
             <Label for="password">Password: </Label>
-            <StyledInput
-              className="form-control"
-              onChange={change}
-              value={form.password}
-              name="password"
-              type="text"
-              placeholder="Password"
-            />
-            <StyledPasswordBorder />
+            <StyledInputBorder>
+              <StyledInput
+                className="form-control"
+                onChange={change}
+                value={form.password}
+                name="password"
+                type="password"
+                placeholder="Password"
+              />
+              <StyledPasswordBorder />
+            </StyledInputBorder>
           </StyledPasswordContainer>
           <div style={{ color: "red" }}>{errors.password}</div>
           <StyledButtonContainer>
