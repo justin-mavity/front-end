@@ -16,7 +16,7 @@ const initialState = {
   error: "",
 };
 
-export const PostReducer = (state = initialState, action) => {
+export const PostReducers = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_FUNDRAISERS_START:
       return {
